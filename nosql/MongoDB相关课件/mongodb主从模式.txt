@@ -1,0 +1,18 @@
+ 
+#初始化
+#主服务器
+bin\mongod --master  -f  conf\mongo_master.conf
+#从服务器
+bin\mongod --slave  --source 127.0.0.1:27080  -f  conf\mongo_slave.conf
+
+
+
+# 连接到指定的mongo服务
+
+mongo  127.0.0.1:27080
+
+主服务器可以进行读写，从服务器也可以读取，但是需要程序主动去读
+从服务器不能写数据，只能读数据
+
+
+ 

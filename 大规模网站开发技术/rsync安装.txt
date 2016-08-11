@@ -1,0 +1,56 @@
+http://rsync.samba.org/ftp/rsync/
+rsync安装：
+
+wget http://rsync.samba.org/ftp/rsync/src/rsync-3.1.1.tar.gz
+
+1、配置 /etc/rsyncd.conf 
+#####################################################################
+# 注意配置文件里面尽可能不要带有中文
+####################################################################
+# Rsync configuration file
+secrets file = /etc/rsyncd.secrets   #认证用户名和密码文件的名称和位置
+motd file = /etc/rsyncd.motd       #欢迎文件，可自己编辑
+list = yes
+uid = root
+gid = root
+use chroot = no
+max connections = 5
+log file = /var/log/rsyncd.log
+pid file = /var/run/rsyncd.pid
+lock file = /var/run/rsync.lock
+# Remote sync configuration module
+[testsync]
+comment = testsync directory
+path = /opt/lampp/htdocs
+auth users = rsync
+
+
+2、配置密码文件
+###########################################################
+ echo "rsync:123456" >> /etc/rsyncd.secrets
+chmod 600 /etc/rsyncd.secrets 
+
+3、配置欢迎文件
+###########################################################
+ echo "hello" >> /etc/rsyncd.motd
+
+
+4、启动 rsync
+###########################################################
+rsync --daemon
+
+
+5、从客户端同步文件
+###########################################################
+rsync -vzrtopg --progress rsync@192.168.0.13::testsync  /opt/data
+rsync -vzrtopg --delete --progress rsync@192.168.0.13:testsync /home/chjq
+
+增加--delete参数会把原有chjq目录下的文件删除以保持客户端和服务器端文件系统完全一致，慎用
+# 注意配置文件里面尽可能不要带有中文
+如果认证失败，就是配置文件的权限或者特殊字符导致。
+
+
+ rsync -vzrtopg --progress rsync@192.168.163.136::testsync  /opt/htdocs  --password-file /opt/passfile.txt
+# --password-file 这个文件只有密码哦 ！
+
+

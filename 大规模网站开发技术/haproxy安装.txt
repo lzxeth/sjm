@@ -1,0 +1,57 @@
+haproxy安装
+
+1、编译
+make TARGET=linux26 PREFIX=/usr/local/haproxy
+
+2、安装
+make install PREFIX=/usr/local/haproxy
+
+#######################################################
+/usr/local/haproxy/conf/haproxy.cfg
+#######################################################
+global
+	log 127.0.0.1 local0
+	maxconn 4096
+	chroot /usr/local/haproxy
+	uid 99
+	gid 99
+	daemon
+	nbproc 1
+	pidfile /usr/local/haproxy/haproxy.pid
+	#debug
+
+defaults 
+	log 127.0.0.1 local3
+	mode http
+	option httplog
+	option httpclose
+	option forwardfor
+	#option forwardfor header cral
+	option redispatch
+	retries 2
+	maxconn 2000
+	#balance source
+	balance roundrobin # static-rr  leastconn first source
+	stats uri /haproxy-stats
+	stats auth admin:123456
+	timeout connect 5000
+	timeout client 50000
+	timeout server 50000
+
+listen web_proxy 192.168.0.18:80
+	server web1  192.168.0.13:80
+	server web2  192.168.0.14:80
+	server web3  192.168.0.15:80
+
+
+
+3、启动
+/usr/local/haproxy/sbin/haproxy -f   /usr/local/haproxy/conf/haproxy.cfg
+
+4、访问页面，查看负载均衡效果
+http://192.168.0.18/
+
+5、查看haproxy状态（需要输入密码）
+http://192.168.0.18/haproxy-stats
+
+6、在php端获取用户的IP

@@ -1,0 +1,68 @@
+
+在运行下列示例代码之前，请先启动redis服务
+否则，会看到类似下面的错误信息
+Fatal error: Uncaught exception 'RedisException' with message 'Redis server went
+ away' in C:\nosql\demo\redis\pubsub_sub.php:23
+
+##################
+
+阻塞效果，在push之前，blPop一直处于阻塞状态
+
+block_blPop.php
+block_push.php
+
+在命令行终端，先执行
+php block_blPop.php
+
+然后再打开一个终端，执行
+php block_push.php
+
+##################################
+
+批量执行命令示例
+php multi.php
+
+###################################
+
+发布订阅命令示例
+
+下面是配合演示的一组
+php pubsub_sub.php
+php pubsub_pub.php
+php pubsub_pub_n.php
+
+在命令行终端，先执行
+php pubsub_sub.php
+
+然后再打开一个终端，执行
+php pubsub_pub.php
+php pubsub_pub_n.php
+
+
+###################################
+
+排序命令示例
+
+sort.php
+sort_by.php
+sort_get.php
+
+####################################
+
+任务队列示例
+
+task_worker.php
+task_queue.php
+
+在命令行终端，先执行
+php task_worker.php
+
+然后再打开一个终端，执行
+php task_queue.php
+
+php task_queue.php 可以重复执行，查看效果。
+
+
+
+
+

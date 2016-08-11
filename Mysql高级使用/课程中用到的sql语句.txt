@@ -1,0 +1,28 @@
+1.查看锁争用情况 show status like 'table_lock%'
+2.查看引擎 show engines;
+3.查看创建表的状况 show create table tablename;
+4.给表(myisam)加锁 lock tables tablename write/read local
+5.给表(myisam)解锁 unlock tables;
+6.给数据集(innodb 行) 加排他锁/共享锁 select *** for update/lock in share mode
+7.查看当前回话的隔离级别select @@tx_isolation; 
+8.查看系统隔离界别 select @@global.tx_isolation 
+9.设置当前回话隔离级别set session transaction isolation level xxx 
+10.设置系统的隔离级别set global transaction isolation level xxx 
+
+===============================
+脏读：一个事务修改后还没提交另一个事务可以读取修改的数据[影响数据一致性]
+不可重复读：一个事务修改提交后另一个事务可以读取修改的数据[影像数据一致性]
+幻读：一个事务插入了一条数据，另一个事务读取不到，但是修改全部数据时会多修改一条[幽灵数据]
+
+优化count:
+1.计数器
+2.explain 的row行
+3.用count(*) - count(*)[小值]
+
+读写分离延迟：
+订单延迟：重点业务读主库
+
+多从库用lvs访问
+
+主库：断了用keep-alive或heartbeat启用另一个主库，
+两个主库同步检测drbd,数据块同步，任何一个地方不一样就互相同步（目录针对）

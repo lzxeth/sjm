@@ -1,0 +1,133 @@
+第二次听时讲的顺序记录：单例  工厂 原型  组合  装饰者
+===============================
+
+1.preface里边
+对应的图片表示了架构（UML）,斜体表示abstract , + 表示 public .
+--1.php不是好的方式，因为加课程的话要改lession类。耦合度高。
+--2.php运用策略模式解决了1.php问题。组合优于继承，新加课程不需要修改原来的代码。
+--3.php : 注册课程后发短信，一般是在注册时，调用一个发短信的方法，但是这里用了一个工厂模式。
+
+
+
+ppt：设计模式遵循的原则：是在看完preface后讲到这里。
+开放封闭举例：
+如果产品让添加一个分享微博功能，那么他以后肯定还要实现一个分享微信的功能，所以不能写成if else形式，
+应该用工厂模式。
+依赖倒置：
+2.php 13line : 只需要知道传入的是哪个抽象，但是实现的细节不关心（即到底是哪个子类不关系），但是子类必须依赖抽象实现。
+里氏代换 ： 
+17line 或20line 的方法，必须是实现了父类的方法的，因为父类有这个方法，要不然还得进行if判断当前类是否有这个方法。
+那样就失去意义了。
+
+
+接着：generating > overtrue
+1.php   :  创建员工要在老板类外边，因为员工也是一个个体，单一职责。老板类的方法add只是添加一个员工的抽象，不管具体什么员工即2.php
+2.php  : 也有个问题，创建员工要一个个创建，然后改为3.php 
+3.php  : 创建员工有一个类。工厂模式
+9.php : 一个更实际的例子，工厂模式，但是这个例子实例化了一个类修改后，可能其他地方也修改了，这就要每个地方实例的类都是一个。
+
+
+接着：generating > singleton
+preferances.php : 一个偏好设置的单例模式。其实是一个多例模式，因为有type类型。
+ApkParser.php  : 解析包，也是多例模式，就是调用getPackageName得到包的时候如果调用过当前path的包了，下次就不用再重新创建了。
+场景：设置全局统一的修改。
+
+
+接着：generating > factory_method
+1.php : 简单工厂模式。
+2.php : 工厂方法模式。
+
+接着：generating > abstract_factory
+1.php  全部抽象
+2.php  多了make方法switch判断。
+一个例子：CWidgetFactory.php就是用的工厂模式。
+
+接着：generating > prototype
+1.php : 其实是工厂模式和原型模式的总和，因为返回的是不同的子类，但每个子类是通过clone返回。
+注意问题：clone时候，当前类有一个属性是其他类的实例的话，clone后的对象的属性还是指向原来的类。默认就是浅复制，如果想深复制的话，
+自己修改clone方法，2.php（没发），php中引用赋值的（类，数组）等都需要深复制。
+在被clone类的clone方法中：
+$this->clone = clone $this->clone;
+
+接着：generating > summary.php: 
+多种模式综合使用，通常代码中都是几种设计模式综合使用。
+
+
+结构性模式：
+组合模式：处理树形结构的数据。
+composite > game.php  : 
+composite > game2.php  :对game.php的共有方法进行提取 
+composite > game3.php  :对game2.php中写的问题优化：一些子类都需要写的方法就放到父类里。
+composite > game4.php  :对game3改进，把能添加单元的的和不能添加单元的分开，也是解决2的问题。
+要自己写一个添加省市区的组合模式例子，city-demo.php,超炫。
+
+装饰着模式：
+decorator >  
+1.php  :  一个问题产生
+2.php  :  装饰者模式解决。
+request.php  :  具体应用中的实例。
+蛋炒饭实例
+又一个实例
+
+外观模式：facede  比较简单，把需要步骤的程序封装起来。
+1.php  ： 外观模式使代码简洁
+2.php  : 一个更简单的例子。
+
+适配器模式：adapter
+adapter.php :
+电子书例子：
+
+代理模式：proxy
+ucwords.php : 
+image_cache.php : 
+图片缓存代理，加载过的就不在加载了
+
+
+
+行为型模式：
+策略模式：strategy
+0.php : 
+1.php : 导出数据，要导出不同类型的数据
+2.php : 对数组排序：对时间的比较用了new DateTime, 返回的是对象，但是可以直接比较大小。研究之。
+
+责任链模式：chain_of_resposibilities
+chain.php : 
+慢速存储（类似mysql）和快速存贮(类似memcached)类，先找快速存贮，没有再找慢存贮。就是给快存贮绑定一个链，
+在快存贮中没找到的话就进入慢存贮找。
+simple.php : 一个简单的先查mysql，再查mem的例子。
+
+观察者模式：observer
+1.php : 正常代码（没发）
+2.php : 
+4.php :观察者模式太常用，php内置了一些接口SplObserver, SplSubject, SplObjectStorage等
+4-补充完成.php : 4的代码缺少实现功能部分，补充完整
+
+中介者模式：mediator,用的很少，知道就行
+1.php: 
+2.php:
+
+链式调用模式：
+1.php : 没发
+
+NullObject模式： 没讲
+1.php : 
+
+命令模式：command   放弃
+1.php : 
+
+状态模式：state  了解
+1.php : 反例，电梯开门关门，没发
+2.php : 状态模式
+
+模板方法设计模式：template_method
+0.php : 简单例子
+1.php : 又一个例子
+
+访问者模式：visitor
+0.simple.php : 
+
+
+1.异常处理类直接抛出，外边没有捕获的话一点点往上冒
+
+
+

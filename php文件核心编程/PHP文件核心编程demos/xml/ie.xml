@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="ie.xsl"?>
+<shoppingcart>
+ <customer>
+  <name>赵子龙</name>
+  <email>Jerry@wlw.org</email>
+  <zipcode>361021</zipcode>
+  <address>中国福建省厦门市</address>
+ </customer>
+ <shoppingItem>
+  <item>
+   <itemNo>1001</itemNo>
+   <itemName>三国演义</itemName>
+   <price>30.00</price>
+   <publisher>文艺出版社</publisher>
+  </item>
+  <item>
+   <itemNo>1002</itemNo>
+   <itemName>红楼梦</itemName>
+   <price>120.00</price>
+   <publisher>文艺出版社</publisher>
+  </item>
+ </shoppingItem>
+</shoppingcart>

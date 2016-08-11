@@ -1,0 +1,20 @@
+
+1、关闭 iptables
+service iptables off
+chkconfig [--level 2345]  iptables off
+
+2、关闭selinux
+/etc/selinux
+
+
+3、 修改  /etc/ssh/sshd_config    //这个是防止通过Xshell等工具连接虚拟机太慢而修改（因为是通过SSH连接），不慢就不用修改。
+GSSAPIAuthentication no
+UseDNS=no
+
+
+4、修改hostname
+
+
+5、Microcode error during guest boot
+sbin/service microcode_ctl stop
+/sbin/chkconfig --del microcode_ctl

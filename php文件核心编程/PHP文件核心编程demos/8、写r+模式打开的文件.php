@@ -1,0 +1,5 @@
+<?php
+
+$handle = fopen("read.txt", "r+");
+echo fputs($handle ,'ÎÒÄÜÐ´ÈëÂð£¿');
+ 

@@ -1,0 +1,41 @@
+ Centos安装Git
+ http://www.codesky.net/article/201110/170019.html
+Fedora Project 推出的 EPEL(Extra Packages for Enterprise Linux)正好适合你。EPEL(http://fedoraproject.org/wiki/EPEL) 是由 Fedora 社区打造，为 RHEL 及衍生发行版如 CentOS、Scientific Linux 等提供高质量软件包的项目。
+
+
+下载源代码安装后，git clone出现“fatal unable to find remote helper for 'https'”的错误，怀疑是git安装不完全 
+
+使用yum安装，出现： 
+ 
+Setting up Install Process  
+No package git available.  
+Nothing to do  
+
+
+解决办法： 
+
+
+
+需要先添加EPEL(Extra Packages for Enterprise Linux) repository: 
+
+Java代码  收藏代码
+CentOS5.x 32-bit(x86/i386):  
+  
+ rpm -Uvh http://dl.fedoraproject.org/pub/epel/5/i386/epel-release-5-4.noarch.rpm  
+  
+CentOS5.x 64-bit(x64):  
+  
+ rpm -Uvh http://dl.fedoraproject.org/pub/epel/5/x86_64/epel-release-5-4.noarch.rpm  
+  
+ CentOS6.x32-bit (x86/i386):  
+  
+ rpm -Uvh http://download.fedoraproject.org/pub/epel/6/i386/epel-release-6-5.noarch.rpm  
+  
+CentOS6.x 64-bit(x64):  
+  
+ rpm -Uvh http://download.fedoraproject.org/pub/epel/6/x86_64/epel-release-6-5.noarch.rpm  
+
+
+
+
+然后yum install git就能安装了

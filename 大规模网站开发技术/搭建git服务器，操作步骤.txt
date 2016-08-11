@@ -1,0 +1,46 @@
+搭建git服务器，操作步骤
+
+1、安装EPEL扩展包的库
+ rpm -Uvh http://dl.fedoraproject.org/pub/epel/5/i386/epel-release-5-4.noarch.rpm  
+
+#  http://dl.fedoraproject.org/pub/epel/6/i386/epel-release-6-8.noarch.rpm
+
+2、安装git
+yum install git
+
+3、git服务器上创建git用户（root用户可以完成这个操作）
+adduser git  #创建一个git的用户
+passwd git  #设置密码，其实不设置也可以的
+
+4、创建空的git库（切换到git用户下，在git的home目录下创建）
+git init --bare myweb ( myweb为不存在的目录 ) ：这个会在myweb目录下多出好多文件，待查原因
+git init  ( cd到一个创建好的目录下，执行命令 ) ： 会在当前目录下多一个.git隐藏文件
+
+
+5、git客户端，就是我们本地，现在就可以用这个git库了
+
+git clone git@10.0.6.118:myweb
+git add . 或者 git  add -A
+git commit -m “说明”
+git push 
+
+
+6、如何不用每次都输入密码？
+
+	a、在本地生成ssh的认证相关文件
+	ssh-keygen -t rsa  -C "phpinside@qq.com"
+
+	b、复制 id_rsa.pub中的内容，写到git服务器的 
+	/home/git/.ssh/authorized_keys 中去
+
+	c、注意权限问题：
+	chmod 0700 /home/git/.ssh/
+	chmod 0600 /home/git/.ssh/authorized_keys
+
+
+7、设置权限，禁止git用户登录
+/etc/passwd
+查找
+git:x:500:500::/home/git:/bin/bash
+修改为：
+git:x:500:500::/home/git:/usr/bin/git-shell

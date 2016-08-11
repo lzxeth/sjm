@@ -1,0 +1,61 @@
+几个命令：
+=======================================
+free命令：
+内存剩余不是看mem行：
+看-/+ buffers/cache ： 	used 是加上buffers的大小， free是减去buffers的大小。
+swap : 看够不够用是看swap（交换分区）是否被用，used不是0就是被用了，被用就证明内存不够了，因为已经用到交换分区了，交换分区是存在
+硬盘上的，硬盘上的都用了当然不够了。
+
+
+关闭防火墙：
+service iptables off //临时关闭
+chkconfig iptables off  //永久关闭
+
+
+开机关机：
+init 0 //关机
+init 6 //重启
+
+
+修改hostname : 3步搞定
+1. vim /etc/sysconfig/network  : 修改hostname对应的名字
+2. vim /etc/hosts   : 不用删，添加一行 127.0.0.1  myname   就行了。
+3. 命令行下：  hostname myname 
+退出重进就行了。
+
+
+小技巧：
+安装软件时报错：
+如果是提示缺少 xxx library， 就直接 yum install xxx-devel就行，因为缺少什么库，就是需要这个库的头文件。
+
+
+nginx反向代理说明
+====================================================================================
+upstream myCluster {
+				#ip_hash   根据ip 来 hash访问，即一个ip总是访问的固定ip
+                server 192.168.1.20:80 ;
+                server 192.168.1.30:80 ;
+}
+
+location ~ \.php$ {
+                proxy_pass http://myCluster ; #这里的名字和上面的cluster的名字相同
+                proxy_redirect off;
+                proxy_set_header Host $host;
+                proxy_set_header X-Real-IP $remote_addr;   
+                proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;  
+        }
+最后两行指定了客户端的真实ip（因为用nginx代理的话真实的服务器获取的是代理服务器的IP），在代码中
+$_SERVER['HTTP_X_REAL_IP'] 或 $_SERVER['HTTP_X_FORWARDED_FOR'] 获取。
+注意一个问题：
+获取ip的函数如果没用反向代理，就直接使用REMOTE_ADDR就行，写那么多容易造成漏洞（仔细看），伪造投票。
+上边的话也不对，如果是客户端用了代理的话，服务器端用REMOTE_ADDR还是取得代理的IP，还是要用HTTP_X_FORWARDED_FOR，
+但是用这个的话客户端可以伪造IP，矛盾。
+
+
+
+******service XXX strat|stop 都是执行的sh脚本，可以看,XXX在/etc/init.d下。
+
+
+		
+
+

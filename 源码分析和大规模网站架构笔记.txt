@@ -1,0 +1,116 @@
+HDwiki:
+==============
+index.php:
+记录开始时间
+引入hdwiki.class.php
+创建对象
+运行
+
+hdwiki.class.php:
+引入config.php,
+$_SERVER['QUERY_STRING'] : URL问号后边的内容
+
+foreach($_GLOBALS):允许的全局变量就留着，不用的就unset掉。删掉为了节省空间。
+
+run()运行new 的control是全部类名都叫control.
+
+init_cache()， 只是new Cache()，但是可能有多种缓存机制啊，， 策略模式。
+
+单点登录：
+====================
+sso 或者 oauth(人人，360)
+
+sso:登录时：
+登录时登录页面是server的页面
+首先A站点iframe到server,server生成登录时间，ip等信息，和一个带过期时间的token
+然后把token值传回A站点的一个页面，A站点再把token传回server验证一致。
+一致后server端种下COOKIE,同时A站点种下cookie。
+退出时A站点传到server，server通知所有子站退出，再退自己。就是删除cookie.
+
+
+discuz:
+========================
+forum.php
+导入核心类
+$modarray  设置白名单
+销毁变量：先=null，再unset，保险。
+
+
+laravel:
+========================
+先讲了权限控制,RBAC
+
+路由：
+Route::Controller()  ,想传参数的话在url后边加问号传参数，在对应的方法就可以收到。
+Route::Resource()  ,国内不太常用，服务器一般只接受get,post方式。这里有patch/delete方式。
+
+
+
+大型网站架构技术：
+================================
+PV :页面访问次数
+UV ：用户访问数
+TPS : TRANSFER  每秒传输
+
+减少http请求：合并css,js（能写到一个文件就写到一个文件）, 多种按钮都用一张图片。
+减少cookie传输：请求js,css,图片时不用传输。方法：修改php运行环境只在请求php时传输cookie。
+
+页面(前端)测试工具：yslow
+
+nat模式：网关模式，以主机为网关，通过主机向外访问，唯一和桥接的不同就是外部不能访问虚拟机。
+交接模式：虚拟机相当于一个真实机，有独立IP。
+
+克隆：仅克隆连接，就是只克隆不同的部分，相同的部分都是用一个，测试就选择这个，方便快捷。
+
+free命令：
+内存剩余不是看mem行：
+看-/+ buffers/cache ： 	used 是加上buffers的大小， free是减去buffers的大小。
+swap : 看够不够用是看swap（交换分区）是否被用，used不是0就是被用了，被用就证明内存不够了，因为已经用到交换分区了，交换分区是存在
+硬盘上的，硬盘上的都用了当然不够了。
+
+关闭防火墙：
+service iptables off /  chkconfig iptables off  
+
+
+修改hostname : 3 step
+1. vim /etc/sysconfig/network  : 修改hostname对应的名字
+2. vim /etc/hosts   : 不用删，添加一行 127.0.0.1  myname   就行了。
+3. 命令行下：  hostname myname 
+退出重进就行了。
+
+
+安装软件时报错：
+如果是提示缺少 xxx library， 就直接 yum install xxx-devel就行，因为缺少什么库，就是需要这个库的头文件。
+
+
+
+
+upstream myCluster {
+				#ip_hash   根据ip 来 hash访问，即一个ip总是访问的固定ip
+                server 192.168.1.20:80 ;
+                server 192.168.1.30:80 ;
+        }
+		
+
+====================================================================================
+实战：
+
+获取代理的真实IP：
+代理中：
+location ~ \.php$ {
+                proxy_pass http://myCluster ; #这里的名字和上面的cluster的名字相同
+                proxy_redirect off;
+                proxy_set_header Host $host;
+                proxy_set_header X-Real-IP $remote_addr;
+                proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        }
+最后两行指定了客户端的真实ip,在代码中
+$_SERVER['HTTP_X_REAL_IP'] 或 $_SERVER['HTTP_X_FORWARDED_FOR'] 获取。
+注意一个问题：
+获取ip的函数如果你没有反向代理，就直接使用REMOTE_ADDR就行，写那么多容易造成漏洞（仔细看），伪造投票。
+
+
+******service XXX strat|stop 都是执行的sh脚本，可以看。
+		
+
+
