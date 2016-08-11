@@ -1,25 +1,25 @@
 <?php
 
 /**
- * ÇøÓò
+ * åŒºåŸŸ
  */
 abstract class Tile {
     abstract function getWealthFactor();
 }
 
 /**
- * Æ½Ô­
+ * å¹³åŸ
  */
 class Plains extends Tile {
     private $wealthfactor = 2;
-    //²Æ¸»¹¤³§
+    //è´¢å¯Œå·¥å‚
     function getWealthFactor() {
         return $this->wealthfactor;
     }
 }
 
 /**
- * ÓĞ×êÊ¯Æ½Ô­
+ * æœ‰é’»çŸ³å¹³åŸ
  */
 class DiamondPlains extends Plains {
     function getWealthFactor() {
@@ -28,7 +28,7 @@ class DiamondPlains extends Plains {
 }
 
 /**
- * ±»ÎÛÈ¾µÄÆ½Ô­
+ * è¢«æ±¡æŸ“çš„å¹³åŸ
  */
 class PollutedPlains extends Plains {
     function getWealthFactor() {
@@ -37,6 +37,6 @@ class PollutedPlains extends Plains {
 }
 
 /**
- * ±»ÎÛÈ¾µÄÓÖÓĞ×êÊ¯µÄÆ½Ô­ÔõÃ´°ìÄØ£¿
+ * è¢«æ±¡æŸ“çš„åˆæœ‰é’»çŸ³çš„å¹³åŸæ€ä¹ˆåŠå‘¢ï¼Ÿ
  */
-//¡£¡£¡£
+//ã€‚ã€‚ã€‚

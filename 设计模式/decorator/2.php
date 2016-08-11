@@ -1,13 +1,13 @@
 <?php
 
-/*×°ÊÎÕßÄ£Ê½*/
-½á¹¹£º×°ÊÎÕßºÍ±»×°ÊÎÕß¶¼ÓÐ¹²Í¬µÄ¸¸Àà
+/*è£…é¥°è€…æ¨¡å¼
+ç»“æž„ï¼šè£…é¥°è€…å’Œè¢«è£…é¥°è€…éƒ½æœ‰å…±åŒçš„çˆ¶ç±»
 */
-abstract class Tile {  //¹²Í¬µÄ¸¸Àà
+abstract class Tile {  //å…±åŒçš„çˆ¶ç±»
     abstract function getWealthFactor();
 }
 
-class Plains extends Tile {  //±»×°ÊÎÕß
+class Plains extends Tile {  //è¢«è£…é¥°è€…
     private $wealthfactor = 2;
 
     function getWealthFactor() {
@@ -16,7 +16,7 @@ class Plains extends Tile {  //±»×°ÊÎÕß
 }
 
 /**
- * ×°ÊÎÕß
+ * è£…é¥°è€…
  */
 abstract class TileDecorator extends Tile {
     protected $tile;
