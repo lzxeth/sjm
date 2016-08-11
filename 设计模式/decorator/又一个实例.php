@@ -7,12 +7,14 @@
  * @see    http://www.giorgiosironi.com/2010/01/practical-php-patterns-decorator.html
  */
 
+//处理html标签的接口，装饰者和被装饰者都要实现这个接口
 interface HtmlElement
 {
     public function __toString();
     public function getName();
 }
 
+//input标签类，被装饰者
 class InputText implements HtmlElement
 {
     protected $name;
@@ -27,8 +29,10 @@ class InputText implements HtmlElement
     }
 }
 
+//装饰者，装饰html标签的抽象类
 abstract class HtmlDecorator implements HtmlElement
 {
+    //被装饰者对象
     protected $element;
     public function __construct(HtmlElement $input) {
         $this->element = $input;

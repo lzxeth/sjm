@@ -1,80 +1,101 @@
 <?php
 
 /**
- * 1 Õ½¶·µ¥Ôª£¨Ê¿±ø£©
+ * 1 æˆ˜æ–—å•å…ƒï¼ˆå£«å…µï¼‰
  */
-abstract class Unit {
-    //ºäÕ¨Á¦¶È
+abstract class Unit
+{
+    //è½°ç‚¸åŠ›åº¦
     abstract function bombardStrength();
-    function addUnit( Unit $unit ) {
-        throw new UnitException( get_class($this)." is a leaf" );
+
+    function addUnit(Unit $unit)
+    {
+        throw new UnitException(get_class($this)." is a leaf");
     }
-    function removeUnit( Unit $unit ) {
-        throw new UnitException( get_class($this)." is a leaf" );
+
+    function removeUnit(Unit $unit)
+    {
+        throw new UnitException(get_class($this)." is a leaf");
     }
 }
 
 
 /**
- * 2 ¾ü¶Ó
+ * 2 å†›é˜Ÿ
  */
-class Army extends Unit{
+class Army extends Unit
+{
     private $units = array();
-    function addUnit( Unit $unit ) {
-        if ( in_array( $unit, $this->units, true ) ) {   //Ìí¼ÓÒ»¸öclone¶ÔÏóÊÇ²»ÐÐµÄ
+
+    function addUnit(Unit $unit)
+    {
+        if (in_array($unit, $this->units, true)) {   //æ·»åŠ ä¸€ä¸ªcloneå¯¹è±¡æ˜¯ä¸è¡Œçš„
             return;
         }
         $this->units[] = $unit;
     }
-    function removeUnit( Unit $unit ) {
-        $this->units = array_udiff( $this->units, array( $unit ),function( $a, $b ) { return ($a === $b)?0:1; } );
+
+    function removeUnit(Unit $unit)
+    {
+        $this->units = array_udiff($this->units, array($unit), function ($a, $b) {
+            return ($a === $b) ? 0 : 1;
+        });
     }
 
-    function bombardStrength() {
+    function bombardStrength()
+    {
         $ret = 0;
-        foreach( $this->units as $unit ) {
+        foreach ($this->units as $unit) {
             $ret += $unit->bombardStrength();
         }
+
         return $ret;
     }
 }
 
 
 /**
- * 3 ÉäÊÖ
+ * 3 å°„æ‰‹
  */
-class UnitException extends Exception {}
-class Archer extends Unit {
-    function bombardStrength() {
+class UnitException extends Exception
+{
+}
+
+class Archer extends Unit
+{
+    function bombardStrength()
+    {
         return 4;
     }
 }
 
 /**
- * ¼ÓÅ©ÅÚ
+ * åŠ å†œç‚®
  */
-class LaserCannonUnit extends Unit {
-    function bombardStrength() {
+class LaserCannonUnit extends Unit
+{
+    function bombardStrength()
+    {
         return 44;
     }
 }
 
 
-// ´´½¨Ò»¸ö¾ü¶Ó
+// åˆ›å»ºä¸€ä¸ªå†›é˜Ÿ
 $main_army = new Army();
-// Ìí¼ÓÕ½¶·µ¥Ôª
-$main_army->addUnit( new Archer() );
-$main_army->addUnit( new LaserCannonUnit() );
+// æ·»åŠ æˆ˜æ–—å•å…ƒ
+$main_army->addUnit(new Archer());
+$main_army->addUnit(new LaserCannonUnit());
 
-// ´´½¨Ò»¸öÐ¡¾ü¶Ó
+// åˆ›å»ºä¸€ä¸ªå°å†›é˜Ÿ
 $sub_army = new Army();
-// Ìí¼ÓÕ½¶·µ¥Ôª
-$sub_army->addUnit( new Archer() );
-$sub_army->addUnit( new Archer() );
-$sub_army->addUnit( new Archer() );
+// æ·»åŠ æˆ˜æ–—å•å…ƒ
+$sub_army->addUnit(new Archer());
+$sub_army->addUnit(new Archer());
+$sub_army->addUnit(new Archer());
 
-// °ÑÐ¡¾ü¶Ó¼ÓÈë´ó¾ü¶Ó
-$main_army->addUnit( $sub_army );
+// æŠŠå°å†›é˜ŸåŠ å…¥å¤§å†›é˜Ÿ
+$main_army->addUnit($sub_army);
 
-// ¼ÆËã×ÜµÄ¹¥»÷Á¦
+// è®¡ç®—æ€»çš„æ”»å‡»åŠ›
 print "attacking with strength: {$main_army->bombardStrength()}\n";

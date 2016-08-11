@@ -1,17 +1,17 @@
 <?php
 
-//game2.php°Ñ²»ÂÛÊÇÉäÊÖ£¬¼ÓÅ©ÅÚ»¹ÊÇ¾ü¶Ó¶¼³éÏóÎªUnit
+//game2.phpæŠŠä¸è®ºæ˜¯å°„æ‰‹ï¼ŒåŠ å†œç‚®è¿˜æ˜¯å†›é˜Ÿéƒ½æŠ½è±¡ä¸ºUnit
 
 /**
- * Õ½¶·µ¥Ôª£¨Ê¿±ø£©
+ * æˆ˜æ–—å•å…ƒï¼ˆå£«å…µï¼‰
  */
 abstract class Unit {
-    //¹¥»÷Á¦¶È
+    //æ”»å‡»åŠ›åº¦
     abstract function bombardStrength();
 }
 
 /**
- * ÉäÊÖ
+ * å°„æ‰‹
  */
 class Archer extends Unit {
     function bombardStrength() {
@@ -20,7 +20,7 @@ class Archer extends Unit {
 }
 
 /**
- * ¼ÓÅ©ÅÚ
+ * åŠ å†œç‚®
  */
 class LaserCannonUnit extends Unit {
     function bombardStrength() {
@@ -30,7 +30,7 @@ class LaserCannonUnit extends Unit {
 
 
 /**
- * ¾ü¶Ó
+ * å†›é˜Ÿ
  */
 class Army {
     private $units = array();
@@ -38,11 +38,11 @@ class Army {
 
     function bombardStrength() {
         $ret = 0;
-        //¾ü¶Ó¿ÉÒÔÓÉÕ½¶·µ¥Ôª×é³É
+        //å†›é˜Ÿå¯ä»¥ç”±æˆ˜æ–—å•å…ƒç»„æˆ
         foreach( $this->units as $unit ) {
             $ret += $unit->bombardStrength();
         }
-        //´ó¾ü¶Ó»¹¿ÉÒÔÓÉÆäËûÐ¡¾ü¶Ó×é³É£º
+        //å¤§å†›é˜Ÿè¿˜å¯ä»¥ç”±å…¶ä»–å°å†›é˜Ÿç»„æˆï¼š
         foreach( $this->armies as $army ) {
             $ret += $army->bombardStrength();
         }
@@ -59,6 +59,6 @@ class Army {
     }
 }
 
-// ÏÂÒ»²½£¬³éÏóÒ»ÏÂ£¬ÌáÈ¡¹²ÓÐ·½·¨
+// ä¸‹ä¸€æ­¥ï¼ŒæŠ½è±¡ä¸€ä¸‹ï¼Œæå–å…±æœ‰æ–¹æ³•
 
 

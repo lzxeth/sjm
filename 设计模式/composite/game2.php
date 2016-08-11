@@ -1,10 +1,10 @@
 <?php
 
 /**
- * 1 Õ½¶·µ¥Ôª£¨Ê¿±ø£©
+ * 1 æˆ˜æ–—å•å…ƒï¼ˆå£«å…µï¼‰
  */
 abstract class Unit {
-    //ºäÕ¨Á¦¶È
+    //è½°ç‚¸åŠ›åº¦
     abstract function bombardStrength();
     abstract function addUnit( Unit $unit );
     abstract function removeUnit( Unit $unit );
@@ -14,7 +14,7 @@ abstract class Unit {
 
 
 /**
- * 2 ¾ü¶Ó
+ * 2 å†›é˜Ÿ
  */
 class Army extends Unit{
     private $units = array();
@@ -41,7 +41,7 @@ class Army extends Unit{
 
 
 /**
- * 3 ÉäÊÖ  //ÉÏ±ßµÄ¾ü¶Ó¿ÉÒÔÌí¼ÓÊ¿±ø£¬µ«ÊÇÉäÊÖ²»ÄÜÔÙÌí¼ÓÉäÊÖÁË£¬ËùÒÔaddUnitµÈ·½·¨¾ÍÅ×³öÒì³£
+ * 3 å°„æ‰‹  //ä¸Šè¾¹çš„å†›é˜Ÿå¯ä»¥æ·»åŠ å£«å…µï¼Œä½†æ˜¯å°„æ‰‹ä¸èƒ½å†æ·»åŠ å°„æ‰‹äº†ï¼Œæ‰€ä»¥addUnitç­‰æ–¹æ³•å°±æŠ›å‡ºå¼‚å¸¸
  */
 class UnitException extends Exception {}
 
@@ -58,10 +58,10 @@ class Archer extends Unit {
 }
 
 /**
- * ¼ÓÅ©ÅÚ
+ * åŠ å†œç‚®
  */
 class LaserCannonUnit extends Unit {
-    // ÉäÊÖºÍ¼ÓÅ©ÅÚ¼¶±ðµÄ²»ÄÜÌí¼ÓÆäËûµ¥ÔªÁË£¬Ã¿¸öÕâ¸ö¼¶±ðµÄÀà¶¼ÒªÐ´exceptionÂð£¿Õâ¶ùÔõÃ´ÓÅ»¯ÄØ£¿
+    // å°„æ‰‹å’ŒåŠ å†œç‚®çº§åˆ«çš„ä¸èƒ½æ·»åŠ å…¶ä»–å•å…ƒäº†ï¼Œæ¯ä¸ªè¿™ä¸ªçº§åˆ«çš„ç±»éƒ½è¦å†™exceptionå—ï¼Ÿè¿™å„¿æ€Žä¹ˆä¼˜åŒ–å‘¢ï¼Ÿ
     function addUnit( Unit $unit ) {
         throw new UnitException( get_class($this)." is a leaf" );
     }
