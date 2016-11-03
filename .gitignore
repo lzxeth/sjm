@@ -1,2 +1,14 @@
+.htaccess
+.buildpath
+.project
+.settings
+*.py
+*.pyc
+*.tar.gz
+public/test.php
+config/local.php
+config/config.php
+config/lucbine.php
+public/xhprof/
 .idea/
-*.xml
+.DS_Store
